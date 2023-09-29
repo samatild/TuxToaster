@@ -1,10 +1,10 @@
 # Tux Toaster
-<div style="float: left; margin-right: 10px;">
-    <img src="assets/tuxtoaster.png" alt="Tux Toaster Logo" width="320"/>
-</div>
+<table>
+<tr>
+<td><img src="assets/tuxtoaster.png" alt="Tux Toaster Logo" width="300px" /></td>
+<td>
 
-<div style="overflow: hidden;">
-    <pre>
+```
 ████████╗██╗   ██╗██╗  ██╗ 
 ╚══██╔══╝██║   ██║╚██╗██╔╝ 
    ██║   ██║   ██║ ╚███╔╝  
@@ -17,8 +17,15 @@
      ██║   ██║   ██║██╔══██║╚════██║   ██║   ██╔══╝  ██╔══██╗
      ██║   ╚██████╔╝██║  ██║███████║   ██║   ███████╗██║  ██║
      ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚══════╝   ╚═╝   ╚══════╝╚═╝  ╚═╝
-    </pre>
-</div>
+
+================================================================
+            All-in-one Linux Stress Testing Toolkit
+================================================================
+```
+
+</td>
+</tr>
+</table>
 
 
 ## ⚠️ WARNING - RUN AT YOUR OWN RISK!⚠️
