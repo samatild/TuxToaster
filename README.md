@@ -1,8 +1,8 @@
 # Tux Toaster
-<table>
-<tr>
-<td><img src="assets/tuxtoaster.png" alt="Tux Toaster Logo" width="300px"/></td>
-<td>
+<div style="float: left; margin-right: 10px;">
+    <img src="assets/tuxtoaster.png" alt="Tux Toaster Logo" width="320"/> 
+    
+</div>
 
 ```
 ████████╗██╗   ██╗██╗  ██╗ 
@@ -22,12 +22,6 @@
             All-in-one Linux Stress Testing Toolkit
 ================================================================
 ```
-
-</td>
-</tr>
-</table>
-
-
 
 ## ⚠️ WARNING - RUN AT YOUR OWN RISK!⚠️
 Tux Toaster is a workload generator that may harm your Linux system. Run it at your own risk. The developer is not responsible for any damage or data loss that may occur from using this software.
