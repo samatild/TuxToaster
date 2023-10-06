@@ -4,7 +4,7 @@ import subprocess
 import os
 from multiprocessing import Process, Value
 import ctypes
-from _simple_term_menu.simple_term_menu import TerminalMenu
+from assets.simple_term_menu import TerminalMenu
 import signal
 import time
 
