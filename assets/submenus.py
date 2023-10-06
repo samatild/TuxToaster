@@ -1,4 +1,4 @@
-from _simple_term_menu.simple_term_menu import TerminalMenu
+from assets.simple_term_menu import TerminalMenu
 from cpu.single_core import run_single_core_stress
 from cpu.all_cores import run_all_cores_stress
 from cpu.custom_cpu import run_custom_cores_stress

@@ -1,4 +1,4 @@
-from _simple_term_menu.simple_term_menu import TerminalMenu
+from assets.simple_term_menu import TerminalMenu
 from assets.submenus import *
 from assets.banner import print_banner
 from assets.descriptions import preview_menu
