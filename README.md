@@ -43,6 +43,8 @@ Tux Toaster is an all-in-one performance toolkit designed for Linux systems. It 
 
 To run Tux Toaster, you'll need to clone the repository and execute the main Python script. Here are the steps:
 
+
+
 ```bash
 # Clone the repository
 git clone https://github.com/samatild/tuxtoaster.git
@@ -53,7 +55,12 @@ cd tuxtoaster
 # Run the main Python script
 python3 tuxtoaster.py
 ```
+Attention: Tux Toaster requires Python module psutil. If you don't have it installed, run the following command:
 
+```bash
+# Install psutil
+pip3 install psutil
+```
 
 ## 3. Available Tests
 

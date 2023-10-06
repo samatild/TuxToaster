@@ -3,6 +3,10 @@ from assets.submenus import *
 from assets.banner import print_banner
 from assets.descriptions import preview_menu
 import os
+import subprocess
+import platform
+import sys
+
 
 def main():
     

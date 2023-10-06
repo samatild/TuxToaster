@@ -1,7 +1,7 @@
 import os
 import subprocess
 import threading
-from _simple_term_menu.simple_term_menu import TerminalMenu
+from assets.simple_term_menu import TerminalMenu
 import signal
 from time import sleep
 import random
