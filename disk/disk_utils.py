@@ -19,7 +19,7 @@ def create_dummy_file_multi(directory, file_name):
 
 def get_unique_mount_points():
     mount_points = {}
-    output = subprocess.check_output(["lsblk", "-o", "NAME,MOUNTPOINT", "-J"], text=True)
+    output = subprocess.check_output(["lsblk", "-o", "NAME,MOUNTPOINT", "-J"], universal_newlines=True)
     lsblk_json = json.loads(output)
     
     for device in lsblk_json['blockdevices']:
