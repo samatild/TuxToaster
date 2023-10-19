@@ -2,7 +2,7 @@ from multiprocessing import Process, Event
 import threading
 import mmap
 import time
-#import psutil
+import psutil
 
 def memory_eater_thread(stop_event, allocated, size_mb):
     size_bytes = size_mb * 1024 * 1024  # Convert MB to bytes
