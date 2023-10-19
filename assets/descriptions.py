@@ -66,6 +66,7 @@ File Creation Phase       Cache Flush Phase         Transition Point       Read 
       |                          |                        |                        |
       |                          |                        |                        |
 """,
+        "Write on Buffer Cache": "\033[93mThis test aims to investigate Buffer Cache (page cache for IO)\033[0m",
         
         "Back to Main": "\033[93mThis option will take you back to the main menu.\033[0m"
     }

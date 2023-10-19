@@ -15,6 +15,7 @@ from disk.disk_bwwrites import run_bwwrites
 from disk.disk_bwrandomrw import run_bwrandom
 from disk.disk_bwrw import run_bwrw
 from disk.disk_cachewriteswarmup import run_cachewriteswarmup
+from disk.disk_buffcachewrites import run_iobuffwrites
 from network.network_in import run_network_in
 from network.network_out import run_network_out
 from network.network_out_multi import run_network_out_multi_socket
@@ -85,7 +86,7 @@ def disk_submenu():
 
         submenu_items = ["IOPS Reads", "IOPS Writes", "Random IOPS R/W", "IOPS 50-50 R/W",
                         "Throughput Reads",  "Throughput Writes", "Random Throughput R/W", "Throughput 50-50 R/W",
-                        "Read while write cache is getting flushed", "Back to Main"]
+                        "Read while write cache is getting flushed", "Write on Buffer Cache", "Back to Main"]
 
         submenu = TerminalMenu(submenu_items, 
                                title="Main Menu > Disk IO",
@@ -114,6 +115,8 @@ def disk_submenu():
         elif selected_option == 8:
             run_cachewriteswarmup()
         elif selected_option == 9:
+            run_iobuffwrites()
+        elif selected_option == 10:
             break
         if selected_option is None:
             break
