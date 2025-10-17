@@ -39,7 +39,27 @@ Tux Toaster is an all-in-one performance toolkit designed for Linux systems. It 
 
 ---
 
-## 2. How to Run Tux Toaster
+## 2. Requirements
+
+Tux Toaster targets Linux and relies on a few system tools in addition to Python:
+
+- Python 3.8+ (tested on modern Linux kernels)
+- Python package: `psutil` (used by memory tests)
+- System utilities: `dd` (coreutils), `lsblk` and `taskset` (util-linux), `pkill` (procps)
+- Internet connectivity (network tests use public endpoints)
+
+Optional/privileged:
+- Root privileges for the "Unclean GC" runaway memory test to adjust `oom_score_adj`
+
+Install `psutil` if needed:
+
+```bash
+pip3 install psutil
+```
+
+---
+
+## 3. How to Run Tux Toaster
 
 To run Tux Toaster, you'll need to clone the repository and execute the main Python script. Here are the steps:
 
@@ -52,52 +72,124 @@ git clone https://github.com/samatild/tuxtoaster.git
 # Navigate to the project directory
 cd tuxtoaster
 
-# Run the main Python script
+# Run the main Python script (interactive menu)
 python3 tuxtoaster.py
 ```
-Attention: Tux Toaster requires Python module psutil. If you don't have it installed, run the following command:
 
-```bash
-# Install psutil
-pip3 install psutil
+Menu controls:
+- Use arrow keys to navigate, Enter to select.
+- Many submenus support multi-select; hints are shown in the UI.
+- Press `q`, `x`, or `Esc` in a menu to go back.
+- During tests, press Enter to stop.
+
+### Menu example
+
+```text
+Main Menu
+> CPU
+  Memory
+  Disk
+  Network
+  Multiple
+  About
+  Exit
+
+Main Menu > Disk IO
+> IOPS Reads
+  IOPS Writes
+  Random IOPS R/W
+  IOPS 50-50 R/W
+  Throughput Reads
+  Throughput Writes
+  Random Throughput R/W
+  Throughput 50-50 R/W
+  Read while write cache is getting flushed
+  Write on Buffer Cache
+  Back to Main
 ```
 
-## 3. Available Tests
+---
+
+## 4. Available Tests
 
 Tux Toaster offers a variety of tests to stress different system components:
 
 - **CPU**:
   - Single Core
   - All Cores
-  - Custom Number of Cores 
+  - Custom Number of Cores (uses `taskset`; experimental)
 - **Memory**: 
   -  Single Runaway Thread
   - Multiple Runaway Threads
   - Memory spikes
-  - Unclean GC
+  - Unclean GC (requires root to set `oom_score_adj`)
 - **Disk**:
-    - IOPS Reads
-    -   IOPS Writes
-    -   Random IOPS R/W
-    -   IOPS 50-50 R/W
-    -   Throughput Reads
-    -   Throughput Writes
-    -   Random Throughput R/W
-    -   Throughput 50-50 R/W
-    -   Read while write cache is getting flushed
+    - IOPS Reads (4K, direct I/O)
+    - IOPS Writes (4K, direct I/O)
+    - Random IOPS R/W (4K, random, direct I/O)
+    - IOPS 50-50 R/W (4K, direct I/O)
+    - Throughput Reads (4MB, direct I/O)
+    - Throughput Writes (4MB, direct I/O)
+    - Random Throughput R/W (4MB, random, direct I/O)
+    - Throughput 50-50 R/W (4MB, direct I/O)
+    - Read while write cache is getting flushed (page cache warm-up then read)
 - **Network**: 
-    - Network IN (Single)
-    - Network OUT (Single)
-    - Network IN (Multiple)
-    - Network OUT (Multiple)
-    - Socket Exaustion (⚠️Under Developement⚠️)
-    - Simulate Latencies (⚠️Under Developement⚠️)
-    - Simulate disconnects (⚠️Under Developement⚠️)
-    - Simulate packet loss (⚠️Under Developement⚠️)
+    - Network IN (Single) — downloads `https://proof.ovh.net/files/100Mb.dat`
+    - Network OUT (Single) — UDP to `8.8.8.8:53`
+    - Network IN (Multiple) — N parallel downloads of the OVH file
+    - Network OUT (Multiple) — N parallel UDP senders to `8.8.8.8:53`
+    - Socket Exhaustion (⚠️ Under development ⚠️)
+    - Simulate Latencies (⚠️ Under development ⚠️)
+    - Simulate disconnects (⚠️ Under development ⚠️)
+    - Simulate packet loss (⚠️ Under development ⚠️)
 - **Multiple tests at once**: (⚠️Under Developement⚠️)
 
 ---
 
-## 4. Credits
+## 5. Detailed Notes per Category
+
+- **CPU**
+  - Single/All Cores spin tight loops to saturate CPU; stop with Enter.
+  - Custom Number of Cores pins workloads using `taskset`. This path invokes an internal stress script; consider it experimental.
+
+- **Memory**
+  - Single Runaway Thread: allocates 1 GiB chunks repeatedly via anonymous `mmap`; press Enter to stop.
+  - Multiple Runaway Threads: user-selectable threads and per-allocation size (MB), stops on low memory; requires `psutil`.
+  - Memory spikes: bursts up to ~80–99% of RAM for 1s, pauses 1–10s, repeats.
+  - Unclean GC (runaway): attempts to set `oom_score_adj = -1000` (root required) then allocates indefinitely. High risk of system instability.
+
+- **Disk**
+  - You select one or more mounted filesystems. For each, the tool creates `io_test_temp/` and a temporary file, runs `dd` loops, and cleans up on stop.
+  - IOPS tests use 4K blocks; Throughput tests use 4MB blocks; many use `oflag=direct`/`iflag=direct` to bypass the page cache by design.
+  - "Read while write cache is getting flushed" pre-creates a file to demonstrate delayed allocation/cache flush effects before sustained reads.
+  - Some filesystems may not support direct I/O on regular files; in that case, `dd` may print errors.
+
+- **Network**
+  - IN tests stream a public test object; OUT tests send UDP to a public DNS server. Use responsibly; organizational firewalls may block this traffic.
+  - Multi-socket modes prompt for the number of parallel sockets; bandwidth is reported per socket when stopped.
+
+---
+
+## 6. Safety, Cleanup, and Permissions
+
+- This tool intentionally creates heavy load; run in controlled environments.
+- Disk tests write temporary files under the selected mount points and delete them on exit.
+- Press Enter to stop any running test. If a test becomes unresponsive, you may need to terminate the Python process.
+- The Unclean GC test needs root; otherwise it will warn and abort.
+
+---
+
+## 7. Known Limitations
+
+- Several menu items are marked "Under development" and are placeholders.
+- The CPU "Custom Number of Cores" mode is experimental and relies on `taskset`; it may require additional internal scripts.
+- Direct I/O flags may not be honored on some filesystems or containerized environments.
+- Network endpoints (`proof.ovh.net`, `8.8.8.8:53`) may be blocked by your network policy.
+
+---
+
+## 8. Credits
 
 This project menu makes use of the magnific [Simple Term Menu](https://github.com/IngoMeyer441/simple-term-menu) library, which is available under the MIT License.
+
+See `LICENSE` for project licensing details.
