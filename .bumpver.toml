@@ -9,5 +9,5 @@ push = true
 
 [bumpver.file_patterns]
 "pyproject.toml" = [
-    'version = "{current_version}"',
-]
+    'version *= *"{current_version}"',
+    ]
