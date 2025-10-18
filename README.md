@@ -1,7 +1,7 @@
 # Tux Toaster
 <table>
 <tr>
-<td><img src="assets/tuxtoaster.png" alt="Tux Toaster Logo" width="300px" /></td>
+<td><img src="https://raw.githubusercontent.com/samatild/tuxtoaster/main/assets/tuxtoaster.png" alt="Tux Toaster Logo" width="300px" /></td>
 <td>
 
 ```
@@ -37,6 +37,8 @@ Tux Toaster is a workload generator that may harm your Linux system. Run it at y
 
 Tux Toaster is an all-in-one performance toolkit designed for Linux systems. It triggers various load tests, referred to as "toasters," to help you evaluate the performance and stability of your system.
 
+Project page: [GitHub repository](https://github.com/samatild/tuxtoaster)
+
 ---
 
 ## 2. Requirements
@@ -59,24 +61,46 @@ pip3 install psutil
 
 ---
 
-## 3. How to Run Tux Toaster
+## 3. How to Install and Run
 
-To run Tux Toaster, you'll need to clone the repository and execute the main Python script. Here are the steps:
-
-
+Install from PyPI (recommended):
 
 ```bash
-# Clone the repository
-git clone https://github.com/samatild/tuxtoaster.git
-
-# Navigate to the project directory
-cd tuxtoaster
-
-# Run the main Python script (interactive menu)
-python3 tuxtoaster.py
+pip install tuxtoaster
+tuxtoaster
 ```
 
-Menu controls:
+### Alternative: Install from source (editable)
+
+```bash
+git clone https://github.com/samatild/tuxtoaster.git
+cd tuxtoaster
+pip install -U pip setuptools wheel
+pip install -e .
+tuxtoaster
+```
+
+### Add install location to PATH
+
+If your shell can't find `tuxtoaster`, add the install directory to PATH:
+
+- System installs (scripts in /usr/local/bin):
+```bash
+export PATH=/usr/local/bin:$PATH
+```
+
+- User installs (scripts in ~/.local/bin):
+```bash
+export PATH="$HOME/.local/bin:$PATH"
+```
+
+To make it persistent (bash):
+```bash
+echo 'export PATH=/usr/local/bin:$PATH' >> ~/.bashrc
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+```
+
+Menu controls (console app):
 - Use arrow keys to navigate, Enter to select.
 - Many submenus support multi-select; hints are shown in the UI.
 - Press `q`, `x`, or `Esc` in a menu to go back.

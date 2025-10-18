@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tuxtoaster"
+version = "1.2.2"
+description = "All-in-one Linux stress and benchmarking toolkit"
+readme = "README.md"
+requires-python = ">=3.8"
+authors = [
+  { name = "Samuel Matildes" }
+]
+license = "MIT"
+keywords = ["benchmark", "linux", "stress", "cpu", "memory", "disk", "network"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Operating System :: POSIX :: Linux",
+  "Environment :: Console",
+  "Topic :: System :: Benchmark",
+]
+
+dependencies = [
+  "psutil>=5.9",
+  "simple-term-menu>=1.6.1",
+]
+
+[project.scripts]
+tuxtoaster = "tuxtoaster.__main__:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+packages = ["tuxtoaster", "tuxtoaster.assets", "tuxtoaster.cpu", "tuxtoaster.disk", "tuxtoaster.memory", "tuxtoaster.network"]
+
+[project.urls]
+Homepage = "https://github.com/samatild/tuxtoaster"
+Repository = "https://github.com/samatild/tuxtoaster.git"
+Issues = "https://github.com/samatild/tuxtoaster/issues"
+
