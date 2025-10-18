@@ -8,6 +8,6 @@ commit = true
 push = true
 
 [bumpver.file_patterns]
-"pyproject.toml" = [
+"project.toml" = [
     'version = "{current_version}"',
 ]
