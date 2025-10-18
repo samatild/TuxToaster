@@ -1,9 +1,4 @@
 # Tux Toaster
-<table>
-<tr>
-<td><img src="https://raw.githubusercontent.com/samatild/tuxtoaster/main/assets/tuxtoaster.png" alt="Tux Toaster Logo" width="300px" /></td>
-<td>
-
 ```
 ████████╗██╗   ██╗██╗  ██╗ 
 ╚══██╔══╝██║   ██║╚██╗██╔╝ 
@@ -22,10 +17,6 @@
             All-in-one Linux Stress Testing Toolkit
 ================================================================
 ```
-
-</td>
-</tr>
-</table>
 
 
 ## ⚠️ WARNING - RUN AT YOUR OWN RISK!⚠️
