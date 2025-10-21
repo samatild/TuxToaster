@@ -4,7 +4,7 @@ def preview_menu(menu_entry):
         "Memory": "\033[93mMemory overload simulation.\033[0m",
         "Disk": "\033[93mSimulates Disk activity.\033[0m",
         "Network": "\033[93mOverload the network stack.\033[0m",
-        "Multiple": "\033[92mUnder developement.\033[0m",
+        "Multiple": "\033[93mRun multiple stressors in parallel: CPU, Memory, Network, Disk.\033[0m",
         "About": "\033[96mTux Toaster is an All-in-One benchmark toolkit for Linux.\n\033[96mIt was designed with the scope of bringing simplicity to common workload tests. \n\n\033[91mThe developer is not responsible for any arm that the tool does to your system. \n\033[91mUse at your own risk!!! \n\n\033[92mDeveloped by: Samuel Matildes \n\033[92mProject Page: \033[93mhttps://github.com/samatild/tuxtoaster\033[0m",
         "Exit": "\033[93mGoodbye.\033[0m"
     }
@@ -80,8 +80,6 @@ def preview_networksbumenu(menu_entry):
         "Network OUT (Multiple)": "\033[93mMulti socket packet transmitter against Internet Beacon. \n\033[93mUser can define custom socket number.\033[0m",
         "Socket Exhaustion": "\033[93mOpen as many local TCP connections as possible to stress per-process and kernel limits.\033[0m",
         "Simulate Latencies": "\033[93mLocal TCP proxy that adds configurable base latency and jitter to traffic.\033[0m",
-        "Simulate disconnects": "\033[92mUnder development.\033[0",
-        "Simulate packet loss": "\033[92mUnder development.\033[0",
         "Back to Main": "\033[93mThis option will take you back to the main menu.\033[0m"
     }
     return descriptions.get(menu_entry, "\033[92mNo description available.\033[0m")

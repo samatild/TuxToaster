@@ -157,7 +157,7 @@ Tux Toaster offers a variety of tests to stress different system components:
     - Simulate Latencies — local TCP proxy that adds base latency and jitter
     - Simulate disconnects (⚠️ Under development ⚠️)
     - Simulate packet loss (⚠️ Under development ⚠️)
-- **Multiple tests at once**: (⚠️Under Developement⚠️)
+- **Multiple tests at once**: Run CPU/Memory/Network/Disk concurrently via a multi-select menu
 
 ---
 
@@ -182,6 +182,21 @@ Tux Toaster offers a variety of tests to stress different system components:
 - **Network**
   - IN tests stream a public test object; OUT tests send UDP to a public DNS server. Use responsibly; organizational firewalls may block this traffic.
   - Multi-socket modes prompt for the number of parallel sockets; bandwidth is reported per socket when stopped.
+
+### Multiple tests at once
+
+What it does:
+- Lets you select one or more resource stressors (CPU, Memory, Network, Disk) and runs each in its own process concurrently.
+
+How to use:
+- From the main menu: Multiple → select items with SPACE → Enter to start.
+- Press Enter at any time to stop all tests.
+
+Behaviors:
+- CPU: spawns one busy process per CPU core (like All Cores).
+- Memory: spawns threads that allocate 500 MB chunks repeatedly until low memory (requires psutil).
+- Network: continuously downloads `https://proof.ovh.net/files/100Mb.dat`.
+- Disk: alternates `dd` read/write (4MB blocks, direct I/O) against a temporary file under `/tmp/tuxtoaster_multi_io`.
 
 ### Network: Socket Exhaustion
 

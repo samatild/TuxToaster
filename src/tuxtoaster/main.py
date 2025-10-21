@@ -1,5 +1,6 @@
 from .assets.simple_term_menu import TerminalMenu
 from .assets.submenus import cpu_submenu, memory_submenu, disk_submenu, network_submenu
+from .multi_runner import run_multiple
 from .assets.banner import print_banner
 from .assets.descriptions import preview_menu
 
@@ -30,6 +31,8 @@ def main():
             disk_submenu()
         elif selected_option == 3:
             network_submenu()
+        elif selected_option == 4:
+            run_multiple()
         elif selected_option == 6:
             # Exit
             break

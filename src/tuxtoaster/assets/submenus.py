@@ -140,8 +140,6 @@ def network_submenu():
             "Network OUT (Multiple)",
             "Socket Exhaustion",
             "Simulate Latencies",
-            "Simulate disconnects",
-            "Simulate packet loss",
             "Back to Main",
         ]
         submenu = TerminalMenu(submenu_items,
@@ -164,10 +162,6 @@ def network_submenu():
         elif selected_option == 5:
             run_network_simulate_latency()
         elif selected_option == 6:
-            break
-        elif selected_option == 7:
-            break
-        elif selected_option == 8:
             break
         if selected_option is None:
             break
