@@ -21,6 +21,7 @@ from ..network.network_out import run_network_out
 from ..network.network_out_multi import run_network_out_multi_socket
 from ..network.network_in_multi import run_network_in_multi_socket
 from ..network.network_socket_exhaustion import run_socket_exhaustion
+from ..network.network_simulate_latency import run_network_simulate_latency
 from .banner import print_banner
 from .descriptions import (
     preview_cpusbumenu,
@@ -161,7 +162,7 @@ def network_submenu():
         elif selected_option == 4:
             run_socket_exhaustion()
         elif selected_option == 5:
-            break
+            run_network_simulate_latency()
         elif selected_option == 6:
             break
         elif selected_option == 7:

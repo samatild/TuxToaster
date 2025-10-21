@@ -79,7 +79,7 @@ def preview_networksbumenu(menu_entry):
         "Network IN (Multiple)": "\033[93mMulti socket packet receiver against Internet Beacon. \n\033[93mUser can define custom socket number.\033[0m",
         "Network OUT (Multiple)": "\033[93mMulti socket packet transmitter against Internet Beacon. \n\033[93mUser can define custom socket number.\033[0m",
         "Socket Exhaustion": "\033[93mOpen as many local TCP connections as possible to stress per-process and kernel limits.\033[0m",
-        "Simulate Latencies": "\033[92mUnder development.\033[0",
+        "Simulate Latencies": "\033[93mLocal TCP proxy that adds configurable base latency and jitter to traffic.\033[0m",
         "Simulate disconnects": "\033[92mUnder development.\033[0",
         "Simulate packet loss": "\033[92mUnder development.\033[0",
         "Back to Main": "\033[93mThis option will take you back to the main menu.\033[0m"
