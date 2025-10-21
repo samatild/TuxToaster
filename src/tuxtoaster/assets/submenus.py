@@ -20,8 +20,14 @@ from ..network.network_in import run_network_in
 from ..network.network_out import run_network_out
 from ..network.network_out_multi import run_network_out_multi_socket
 from ..network.network_in_multi import run_network_in_multi_socket
+from ..network.network_socket_exhaustion import run_socket_exhaustion
 from .banner import print_banner
-from .descriptions import preview_cpusbumenu, preview_memsbumenu, preview_disksbumenu, preview_networksbumenu
+from .descriptions import (
+    preview_cpusbumenu,
+    preview_memsbumenu,
+    preview_disksbumenu,
+    preview_networksbumenu,
+)
 
 
 def cpu_submenu():
@@ -77,9 +83,19 @@ def memory_submenu():
 def disk_submenu():
     while True:
         print_banner()
-        submenu_items = ["IOPS Reads", "IOPS Writes", "Random IOPS R/W", "IOPS 50-50 R/W",
-                        "Throughput Reads",  "Throughput Writes", "Random Throughput R/W", "Throughput 50-50 R/W",
-                        "Read while write cache is getting flushed", "Write on Buffer Cache", "Back to Main"]
+        submenu_items = [
+            "IOPS Reads",
+            "IOPS Writes",
+            "Random IOPS R/W",
+            "IOPS 50-50 R/W",
+            "Throughput Reads",
+            "Throughput Writes",
+            "Random Throughput R/W",
+            "Throughput 50-50 R/W",
+            "Read while write cache is getting flushed",
+            "Write on Buffer Cache",
+            "Back to Main",
+        ]
         submenu = TerminalMenu(submenu_items,
                                title="Main Menu > Disk IO",
                                preview_command=preview_disksbumenu,
@@ -116,11 +132,19 @@ def disk_submenu():
 def network_submenu():
     while True:
         print_banner()
-        submenu_items = ["Network IN (Single)", "Network OUT (Single)", "Network IN (Multiple)", "Network OUT (Multiple)",
-                        "Socket Exaustion",  "Simulate Latencies", "Simulate disconnects", "Simulate packet loss",
-                         "Back to Main"]
+        submenu_items = [
+            "Network IN (Single)",
+            "Network OUT (Single)",
+            "Network IN (Multiple)",
+            "Network OUT (Multiple)",
+            "Socket Exhaustion",
+            "Simulate Latencies",
+            "Simulate disconnects",
+            "Simulate packet loss",
+            "Back to Main",
+        ]
         submenu = TerminalMenu(submenu_items,
-                               title="Main Menu > Disk IO",
+                               title="Main Menu > Network",
                                preview_command=preview_networksbumenu,
                                preview_size=0.75,
                                preview_title="\033[91mDescription\033[0m"
@@ -135,7 +159,7 @@ def network_submenu():
         elif selected_option == 3:
             run_network_out_multi_socket()
         elif selected_option == 4:
-            break
+            run_socket_exhaustion()
         elif selected_option == 5:
             break
         elif selected_option == 6:
@@ -146,5 +170,4 @@ def network_submenu():
             break
         if selected_option is None:
             break
-
 
