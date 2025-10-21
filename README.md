@@ -153,7 +153,7 @@ Tux Toaster offers a variety of tests to stress different system components:
     - Network OUT (Single) — UDP to `8.8.8.8:53`
     - Network IN (Multiple) — N parallel downloads of the OVH file
     - Network OUT (Multiple) — N parallel UDP senders to `8.8.8.8:53`
-    - Socket Exhaustion (⚠️ Under development ⚠️)
+    - Socket Exhaustion — exhaust process/kernel socket resources or reserve port ranges
     - Simulate Latencies (⚠️ Under development ⚠️)
     - Simulate disconnects (⚠️ Under development ⚠️)
     - Simulate packet loss (⚠️ Under development ⚠️)
@@ -182,6 +182,45 @@ Tux Toaster offers a variety of tests to stress different system components:
 - **Network**
   - IN tests stream a public test object; OUT tests send UDP to a public DNS server. Use responsibly; organizational firewalls may block this traffic.
   - Multi-socket modes prompt for the number of parallel sockets; bandwidth is reported per socket when stopped.
+
+### Network: Socket Exhaustion
+
+What it does:
+- Opens and holds many sockets until you press Enter, to expose practical limits like per-process file descriptors and ephemeral port exhaustion. Two modes:
+  - Connections (default): Starts a local TCP server on 127.0.0.1 and opens as many TCP client connections to it as possible, then keeps them open.
+  - Bind listener ports: Binds listening sockets over a port range (on 0.0.0.0) to reserve those ports and block other listeners on the same host.
+
+How to use:
+- From the menu: Network → Socket Exhaustion.
+- Optionally answer “y” to increase this process open-file limit to the hard limit.
+- Choose Mode 1 (connections) or Mode 2 (bind listener ports).
+- Press Enter at any time to release all sockets and return to the menu.
+
+Mode details:
+- Mode 1 (connections):
+  - The tool prints progress every 100 sockets with an approximate open rate.
+  - Stops opening when it hits an OS error (e.g., EMFILE or EADDRNOTAVAIL); sockets remain open until you press Enter.
+  - Useful to observe ephemeral port exhaustion (Cannot assign requested address) and per-process descriptor limits.
+- Mode 2 (bind listener ports):
+  - Prompts for a port range (e.g., 1024–65535) and binds on 0.0.0.0 to prevent other processes (e.g., `ncat -l`) from listening on those ports.
+  - May require root to bind ports <1024.
+
+Tuning tips (advanced):
+- Increase ephemeral port range (temporary):
+```bash
+sudo sysctl -w net.ipv4.ip_local_port_range="1024 65535"
+```
+- Add extra loopback IPs to expand source address space (Mode 1):
+```bash
+sudo ip addr add 127.0.0.2/8 dev lo
+sudo ip addr add 127.0.0.3/8 dev lo
+```
+- Consider IPv6 `::1` to use a separate ephemeral space.
+- Raise per-process open file limit (interactive prompt will try to set soft=hard):
+```bash
+ulimit -n 1048576
+```
+- For system-wide exhaustion tests, run multiple instances or combine with other processes.
 
 ---
 
