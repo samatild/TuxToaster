@@ -3,7 +3,7 @@ name: Publish to PyPI
 on:
   push:
     tags:
-      - "v*"     # triggers only when you push a version tag like v1.2.1
+      - "*.*.*"  # triggers when you push a version tag like 1.2.3 (no 'v' prefix)
   workflow_dispatch:  # optional manual trigger
 
 jobs:
