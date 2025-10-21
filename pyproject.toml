@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "tuxtoaster"
-version = "1.2.5"
+version = "1.2.6"
 description = "All-in-one Linux stress and benchmarking toolkit"
 readme = "README.md"
 requires-python = ">=3.8"
@@ -39,7 +39,7 @@ Issues = "https://github.com/samatild/tuxtoaster/issues"
 
 
 [tool.bumpver]
-current_version = "1.2.5"
+current_version = "1.2.6"
 version_pattern = "MAJOR.MINOR.PATCH"
 commit_message = "bump: {old_version} → {new_version}"
 tag_message = "v{new_version}"
