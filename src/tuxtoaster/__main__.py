@@ -1,6 +1,6 @@
 import sys
 from importlib.metadata import PackageNotFoundError, version as pkg_version
-from .main import main
+from .main import main as app_main
 
 
 def _print_help() -> None:
@@ -28,7 +28,7 @@ def _cli_entry() -> None:
     args = sys.argv[1:]
 
     if not args:
-        main()
+        app_main()
         return
 
     if args[0] in ("-h", "--help"):
@@ -48,6 +48,6 @@ if __name__ == "__main__":
 
 
 def main() -> None:
-    # Entry point used by console_scripts in pyproject.toml
+    # Entry point used by console_scripts
     _cli_entry()
 
