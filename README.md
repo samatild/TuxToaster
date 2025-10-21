@@ -154,7 +154,7 @@ Tux Toaster offers a variety of tests to stress different system components:
     - Network IN (Multiple) — N parallel downloads of the OVH file
     - Network OUT (Multiple) — N parallel UDP senders to `8.8.8.8:53`
     - Socket Exhaustion — exhaust process/kernel socket resources or reserve port ranges
-    - Simulate Latencies (⚠️ Under development ⚠️)
+    - Simulate Latencies — local TCP proxy that adds base latency and jitter
     - Simulate disconnects (⚠️ Under development ⚠️)
     - Simulate packet loss (⚠️ Under development ⚠️)
 - **Multiple tests at once**: (⚠️Under Developement⚠️)
@@ -221,6 +221,81 @@ sudo ip addr add 127.0.0.3/8 dev lo
 ulimit -n 1048576
 ```
 - For system-wide exhaustion tests, run multiple instances or combine with other processes.
+
+### Network: Simulate Latencies
+
+What it does:
+- Runs a local TCP proxy on 127.0.0.1 that relays to a target host:port and injects artificial delay on each chunk with configurable base latency and jitter. Use this to see how added RTT affects interactive protocols and bulk transfers.
+
+How to use:
+- From the menu: Network → Simulate Latencies.
+- Enter values when prompted:
+  - Target host (e.g., `www.google.com`)
+  - Target port (e.g., `80`)
+  - Local listen port (`0` for auto; the app will print the actual port)
+  - Base latency in ms (e.g., `200`)
+  - Jitter (+/- ms) (e.g., `50`)
+- Point clients to `127.0.0.1:<listen_port>` and preserve the original Host header when needed.
+- Press Enter in the app to stop and clean up.
+
+Example towards Google (HTTP):
+
+Start Simulate Latencies with:
+- Target host: `www.google.com`
+- Target port: `80`
+- Local listen port: `46843` (or `0` and note the printed port)
+- Base latency: `200`
+- Jitter: `50`
+
+Single request via curl (preserving Host):
+```bash
+curl -H "Host: www.google.com" -s -o /dev/null -w 'connect=%{time_connect}s starttransfer=%{time_starttransfer}s total=%{time_total}s\n' http://127.0.0.1:46843/
+```
+
+Sample output:
+```text
+connect=0.000136s starttransfer=2.147816s total=6.028596s
+```
+
+Multiple runs (simple average by eye):
+```bash
+for i in {1..10}; do
+  curl -H "Host: www.google.com" -s -o /dev/null -w '%{time_total}\n' http://127.0.0.1:46843/
+done
+```
+
+Other useful client tests:
+- wget
+```bash
+wget -S -O /dev/null --header='Host: www.google.com' http://127.0.0.1:46843/
+```
+
+- HTTP load (hey)
+```bash
+hey -n 200 -c 20 -H 'Host: www.google.com' http://127.0.0.1:46843/
+```
+
+- iperf3 (through the proxy to a remote server)
+1) On a remote box: `iperf3 -s`
+2) Run latency sim to `remote:5201`, local listen port `5202`
+3) Client:
+```bash
+iperf3 -c 127.0.0.1 -p 5202 -t 20
+```
+
+- SSH (replace with your host)
+1) Run latency sim to `your.ssh.host:22`, local listen port `10022`
+2) Client:
+```bash
+ssh -p 10022 user@127.0.0.1
+```
+
+- Postgres (replace with your DB)
+1) Run latency sim to `db-host:5432`, local listen port `5433`
+2) Client:
+```bash
+psql -h 127.0.0.1 -p 5433 -U myuser mydb
+```
 
 ---
 
