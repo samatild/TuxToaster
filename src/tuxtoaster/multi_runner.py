@@ -229,12 +229,21 @@ def run_multiple() -> None:
     # Wait for stop
     prompt_thread.join()
 
-    # Terminate processes
+    # Ask workers to exit gracefully so they can clean up their children
     for p in processes:
         try:
-            p.terminate()
+            p.join(timeout=10)
         except Exception:
             pass
+
+    # Force-terminate any stragglers
+    for p in processes:
+        if p.is_alive():
+            try:
+                p.terminate()
+            except Exception:
+                pass
+
     for p in processes:
         try:
             p.join()
