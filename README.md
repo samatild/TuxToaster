@@ -36,19 +36,12 @@ Project page: [GitHub repository](https://github.com/samatild/tuxtoaster)
 
 Tux Toaster targets Linux and relies on a few system tools in addition to Python:
 
-- Python 3.8+ (tested on modern Linux kernels)
-- Python package: `psutil` (used by memory tests)
+- Python 3.6+ (backported legacy support for 3.6)
 - System utilities: `dd` (coreutils), `lsblk` and `taskset` (util-linux), `pkill` (procps)
 - Internet connectivity (network tests use public endpoints)
 
 Optional/privileged:
 - Root privileges for the "Unclean GC" runaway memory test to adjust `oom_score_adj`
-
-Install `psutil` if needed:
-
-```bash
-pip3 install psutil
-```
 
 ---
 
@@ -66,7 +59,7 @@ tuxtoaster
 ```bash
 git clone https://github.com/samatild/tuxtoaster.git
 cd tuxtoaster
-pip install -U pip setuptools wheel
+pip install -U pip setuptools wheel # Optional  but recommended
 pip install -e .
 tuxtoaster
 ```
@@ -155,8 +148,6 @@ Tux Toaster offers a variety of tests to stress different system components:
     - Network OUT (Multiple) — N parallel UDP senders to `8.8.8.8:53`
     - Socket Exhaustion — exhaust process/kernel socket resources or reserve port ranges
     - Simulate Latencies — local TCP proxy that adds base latency and jitter
-    - Simulate disconnects (⚠️ Under development ⚠️)
-    - Simulate packet loss (⚠️ Under development ⚠️)
 - **Multiple tests at once**: Run CPU/Memory/Network/Disk concurrently via a multi-select menu
 
 ---
@@ -334,6 +325,8 @@ psql -h 127.0.0.1 -p 5433 -U myuser mydb
 
 ## 8. Credits
 
-This project menu makes use of the magnific [Simple Term Menu](https://github.com/IngoMeyer441/simple-term-menu) library, which is available under the MIT License.
+This project menu makes use of the magnific [Simple Term Menu](https://github.com/IngoMeyer441/simple-term-menu) package.
 
+
+## 9. License
 See `LICENSE` for project licensing details.
