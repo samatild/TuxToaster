@@ -1,5 +1,8 @@
 import sys
-from importlib.metadata import PackageNotFoundError, version as pkg_version
+try:
+    from importlib.metadata import PackageNotFoundError, version as pkg_version
+except Exception:  # Python < 3.8
+    from importlib_metadata import PackageNotFoundError, version as pkg_version  # type: ignore
 from .main import main as app_main
 
 

@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=68", "wheel"]
+requires = ["setuptools<60", "wheel<0.38"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -7,7 +7,7 @@ name = "tuxtoaster"
 version = "1.2.8"
 description = "All-in-one Linux stress and benchmarking toolkit"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.6"
 authors = [
   { name = "Samuel Matildes" }
 ]
@@ -15,6 +15,7 @@ license = "MIT"
 keywords = ["benchmark", "linux", "stress", "cpu", "memory", "disk", "network"]
 classifiers = [
   "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.6",
   "Operating System :: POSIX :: Linux",
   "Environment :: Console",
   "Topic :: System :: Benchmark",
@@ -23,6 +24,7 @@ classifiers = [
 dependencies = [
   "psutil>=5.9",
   "simple-term-menu>=1.6.1",
+  "importlib-metadata>=4,<5; python_version<'3.8'",
 ]
 
 [project.scripts]
