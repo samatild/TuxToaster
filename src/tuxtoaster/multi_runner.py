@@ -11,7 +11,7 @@ import threading
 import ctypes
 from multiprocessing import Process, Event, Value
 
-from .assets.simple_term_menu import TerminalMenu
+from simple_term_menu import TerminalMenu
 
 
 # ANSI colors

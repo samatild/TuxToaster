@@ -1,4 +1,4 @@
-from .assets.simple_term_menu import TerminalMenu
+from simple_term_menu import TerminalMenu
 from .assets.submenus import cpu_submenu, memory_submenu, disk_submenu, network_submenu
 from .multi_runner import run_multiple
 from .assets.banner import print_banner
